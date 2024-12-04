@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "target": "ES2022",
+        "strict": true,
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "dist",
+    },
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*",
+        "dist",
+    ]
+}
