@@ -1,7 +1,8 @@
 {
   "name": "tuintu",
   "version": "0.0.1",
-  "description": "A personal-use safe std lib for JS/TS",
+  "description": "An opinionated and safe std lib for JS/TS",
+  "repository": "https://github.com/TetroGem/tuintu",
   "main": "index.js",
   "exports": {
     "./*": "./dist/*.js"
