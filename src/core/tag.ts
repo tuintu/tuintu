@@ -6,11 +6,25 @@ export type Tagged<Entries> =
             : unknown;
 ;
 
-export function Tag<R, const T extends string, const V>(
-    tag: T,
-    value: unknown extends R ? V : (Variant<Unpromise<Variant<R, T>>, T>)[T & keyof Variant<Unpromise<Variant<R, T>>, T>],
-): unknown extends R ? Tagged<[T, V]> : Variant<R, T>;
-export function Tag<const TaggedConst extends Tagged<[Tag, any]>, const Tag>(tag: Tag): { [Tag.symbol]: Tag };
+export type ExtractTagged<T> = Extract<T, { [Tag.symbol]: string }>;
+export type UnionKeys<T> = T extends T ? keyof T : never;
+export type VariantKey<Enum> = ExtractTagged<Enum>[typeof Tag.symbol];
+export type Variant<Enum, Key extends VariantKey<Enum>> = Extract<ExtractTagged<Enum>, { [Tag.symbol]: Key }>;
+export type VariantValue<Enum, Key extends VariantKey<Enum>> = Key extends keyof Variant<Enum, Key> ? Variant<Enum, Key>[Key] : never;
+
+export type PayloadVariantKey<Enum> = ExtractPayloadVariantKey<Enum, VariantKey<Enum>>;
+export type ExtractPayloadVariantKey<Enum, Key extends VariantKey<Enum>> = Key extends keyof Variant<Enum, Key> ? Key : never;
+export type UnitVariantKey<Enum> = Exclude<VariantKey<Enum>, PayloadVariantKey<Enum>>;
+
+export function Tag<const Key extends string, const Value, Enum = any>(
+    key: Key & VariantKey<Enum>, // need this to be all variants for autocomplete (otherwise unit keys are excluded)
+    value: VariantValue<Enum, typeof key & PayloadVariantKey<Enum>>,
+): Variant<Enum, typeof key>;
+
+export function Tag<const Key extends string, Enum = any>(
+    key: Key & UnitVariantKey<Enum>,
+): Variant<Enum, typeof key>;
+
 export function Tag<const T extends string, V>(tag: T, value?: V): Tagged<[T, V]> {
     if (arguments.length === 1) {
         return { [Tag.symbol]: tag } as any;
@@ -18,9 +32,6 @@ export function Tag<const T extends string, V>(tag: T, value?: V): Tagged<[T, V]
         return { [Tag.symbol]: tag, [tag]: value } as any;
     }
 }
-
-type Variant<Tagged, Tag> = Tagged & { [Tag.symbol]: Tag };
-type Unpromise<T> = T extends PromiseLike<any> ? never : T;
 
 export namespace Tag {
     export const symbol: unique symbol = Symbol('tag');
