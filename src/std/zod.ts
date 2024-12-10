@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { Result } from '../core/result';
-import { Tag } from '../core/tag';
+import { Result, ResultType } from '../core/result';
 
 export function parse<const S extends z.Schema>(
     schema: S,
@@ -8,7 +7,7 @@ export function parse<const S extends z.Schema>(
 ): Result<z.output<S>, z.ZodError> {
     const res = schema.safeParse(data);
     switch (res.success) {
-        case true: return Tag('ok', res.data);
-        case false: return Tag('err', res.error);
+        case true: return { type: ResultType.Ok, ok: res.data };
+        case false: return { type: ResultType.Err, err: res.error };
     }
 }

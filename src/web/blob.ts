@@ -1,9 +1,8 @@
-import { Result } from '../core/result';
-import { Tag } from '../core/tag';
+import { Result, ResultType } from '../core/result';
 
 export function blobToUri(blob: Blob): Promise<Result<string, string>> {
     if (FileReader === undefined) {
-        return Promise.resolve(Tag('err', "Web APIs not found"));
+        return Promise.resolve({ type: ResultType.Err, err: "Web APIs not found" });
     }
 
     return new Promise(resolve => {
@@ -12,30 +11,30 @@ export function blobToUri(blob: Blob): Promise<Result<string, string>> {
         reader.onload = () => {
             const { result } = reader;
             if (typeof result === 'string') {
-                resolve(Tag('ok', result));
+                resolve({ type: ResultType.Ok, ok: result });
             } else {
-                resolve(Tag('err', "FileReader did not return string"));
+                resolve({ type: ResultType.Err, err: "FileReader did not return string" });
             }
         };
 
         reader.onerror = () => {
-            resolve(Tag('err', "Failed to read blob"));
+            resolve({ type: ResultType.Err, err: "Failed to read blob" });
         };
 
         reader.onabort = () => {
-            resolve(Tag('err', "Blob reading was aborted"));
+            resolve({ type: ResultType.Err, err: "Blob reading was aborted" });
         };
     });
 }
 
 export async function tryDownloadFile(name: string, blob: Blob): Promise<Result<null, string>> {
     if (document === undefined) {
-        return Tag('err', "Web APIs not found");
+        return { type: ResultType.Err, err: "Web APIs not found" };
     }
 
     const a = document.createElement('a');
     const uriRes = await blobToUri(blob);
-    if (Tag.is(uriRes, 'err')) {
+    if (uriRes.type === ResultType.Err) {
         return uriRes;
     }
 
@@ -43,5 +42,5 @@ export async function tryDownloadFile(name: string, blob: Blob): Promise<Result<
     a.href = uri;
     a.download = name;
     a.click();
-    return Tag('ok', null);
+    return { type: ResultType.Ok, ok: null };
 }

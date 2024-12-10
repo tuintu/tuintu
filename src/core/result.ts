@@ -1,10 +1,13 @@
 import { panic } from '../core';
-import { Tag, Tagged } from './tag';
 
-export type Result<T, E> = Tagged<
-    | ['ok', T]
-    | ['err', E]
->
+export enum ResultType {
+    Ok = 'ok',
+    Err = 'err',
+}
+
+export type Result<T, E> =
+    | { type: ResultType.Ok, ok: T }
+    | { type: ResultType.Err, err: E }
 
 export namespace Result {
     export function all<const A extends Result<any, any>[]>(
@@ -15,36 +18,36 @@ export namespace Result {
     > {
         const oks = [];
         for (const result of results) {
-            switch (result[Tag.symbol]) {
-                case 'ok': {
+            switch (result.type) {
+                case ResultType.Ok: {
                     oks.push(result.ok);
                     break;
                 }
-                case 'err': return result;
+                case ResultType.Err: return result;
             }
         }
 
-        return Tag('ok', oks as any);
+        return { type: ResultType.Ok, ok: oks as any };
     }
 
     export function map<T, E, R>(self: Result<T, E>, mapper: (ok: T) => R): Result<R, E> {
-        switch (self[Tag.symbol]) {
-            case 'ok': return Tag('ok', mapper(self.ok));
-            case 'err': return self;
+        switch (self.type) {
+            case ResultType.Ok: return { type: ResultType.Ok, ok: mapper(self.ok) };
+            case ResultType.Err: return self;
         }
     }
 
     export function mapErr<T, E, R>(self: Result<T, E>, mapper: (err: E) => R): Result<T, R> {
-        switch (self[Tag.symbol]) {
-            case 'ok': return self;
-            case 'err': return Tag('err', mapper(self.err));
+        switch (self.type) {
+            case ResultType.Ok: return self;
+            case ResultType.Err: return { type: ResultType.Err, err: mapper(self.err) };
         }
     }
 
     export function expect<T, E>(self: Result<T, E>, message: string): T {
-        switch (self[Tag.symbol]) {
-            case 'ok': return self.ok;
-            case 'err': panic.violated(`expected ok: ${message}`);
+        switch (self.type) {
+            case ResultType.Ok: return self.ok;
+            case ResultType.Err: panic.violated(`expected ok: ${message}`);
         }
     }
 }
