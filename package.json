@@ -1,9 +1,10 @@
 {
   "name": "tuintu",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An opinionated and safe std lib for JS/TS",
   "repository": "https://github.com/TetroGem/tuintu",
   "main": "index.js",
+  "type": "module",
   "exports": {
     "./*": "./dist/*.js"
   },
