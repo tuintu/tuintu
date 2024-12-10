@@ -1,8 +1,8 @@
-import * as core from './core';
-export * as core from './core';
-import * as std from './std';
-export * as std from './std';
-import * as web from './web';
-export * as web from './web';
+import * as core from './core.js';
+export * as core from './core.js';
+import * as std from './std.js';
+export * as std from './std.js';
+import * as web from './web.js';
+export * as web from './web.js';
 
 export default { core, std, web };

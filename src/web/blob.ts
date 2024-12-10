@@ -1,4 +1,4 @@
-import { Result, ResultType } from '../core/result';
+import { Result, ResultType } from '../core/result.js';
 
 export function blobToUri(blob: Blob): Promise<Result<string, string>> {
     if (FileReader === undefined) {

@@ -1,4 +1,4 @@
-import { Result, ResultType } from './result';
+import { Result, ResultType } from './result.js';
 
 export function sync<R>(runner: () => R): Result<R, unknown> {
     try {

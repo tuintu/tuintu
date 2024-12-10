@@ -1,6 +1,6 @@
-import { unsafe } from '../core';
-import { Result } from '../core/result';
-import { blob } from '../std';
+import { unsafe } from '../core.js';
+import { Result } from '../core/result.js';
+import { blob } from '../std.js';
 
 export async function text(self: Blob): Promise<Result<string, unknown>> {
     return unsafe.promise(self.text());

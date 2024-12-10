@@ -1,4 +1,4 @@
-import { panic } from '../core';
+import { panic } from '../core.js';
 
 export enum ResultType {
     Ok = 'ok',

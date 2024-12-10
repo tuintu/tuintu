@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Result, ResultType } from '../core/result';
+import { Result, ResultType } from '../core/result.js';
 
 export function parse<const S extends z.Schema>(
     schema: S,

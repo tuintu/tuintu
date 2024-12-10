@@ -1,5 +1,5 @@
-import { Result, ResultType } from '../core/result';
-import tu from '../tu';
+import { Result, ResultType } from '../core/result.js';
+import tu from '../tu.js';
 
 export type Status = {
     code: number,

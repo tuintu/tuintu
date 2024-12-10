@@ -1,4 +1,4 @@
-import * as blob from './web/blob';
-export * as blob from './web/blob';
+import * as blob from './web/blob.js';
+export * as blob from './web/blob.js';
 
 export default { blob };
