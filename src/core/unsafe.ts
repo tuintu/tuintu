@@ -1,28 +1,25 @@
-import { Result, ResultType } from './result.js';
+import { err, ok, Result } from './result.js';
 
 export function sync<R>(runner: () => R): Result<R, unknown> {
     try {
-        const ok = runner();
-        return { type: ResultType.Ok, ok };
-    } catch (err) {
-        return { type: ResultType.Err, err }
+        return ok(runner());
+    } catch (e) {
+        return err(e);
     }
 }
 
 export async function promise<R>(promise: Promise<R>): Promise<Result<Awaited<R>, unknown>> {
     try {
-        const ok = await promise;
-        return { type: ResultType.Ok, ok: ok as any };
-    } catch (err) {
-        return { type: ResultType.Err, err };
+        return ok(await promise);
+    } catch (e) {
+        return err(e);
     }
 }
 
 export async function async<R>(runner: () => Promise<R>): Promise<Result<Awaited<R>, unknown>> {
     try {
-        const ok = await runner();
-        return { type: ResultType.Ok, ok: ok as any };
-    } catch (err) {
-        return { type: ResultType.Err, err };
+        return ok(await runner());
+    } catch (e) {
+        return err(e);
     }
 }

@@ -1,8 +1,8 @@
-import { Result, ResultType } from '../core/result.js';
+import { err, ok, Result } from '../core/result.js';
 
 export function blobToUri(blob: Blob): Promise<Result<string, string>> {
     if (FileReader === undefined) {
-        return Promise.resolve({ type: ResultType.Err, err: "Web APIs not found" });
+        return Promise.resolve(err("Web APIs not found"));
     }
 
     return new Promise(resolve => {
@@ -11,30 +11,30 @@ export function blobToUri(blob: Blob): Promise<Result<string, string>> {
         reader.onload = () => {
             const { result } = reader;
             if (typeof result === 'string') {
-                resolve({ type: ResultType.Ok, ok: result });
+                resolve(ok(result));
             } else {
-                resolve({ type: ResultType.Err, err: "FileReader did not return string" });
+                resolve(err("FileReader did not return string"));
             }
         };
 
         reader.onerror = () => {
-            resolve({ type: ResultType.Err, err: "Failed to read blob" });
+            resolve(err("Failed to read blob"));
         };
 
         reader.onabort = () => {
-            resolve({ type: ResultType.Err, err: "Blob reading was aborted" });
+            resolve(err("Blob reading was aborted"));
         };
     });
 }
 
 export async function tryDownloadFile(name: string, blob: Blob): Promise<Result<null, string>> {
     if (document === undefined) {
-        return { type: ResultType.Err, err: "Web APIs not found" };
+        return err("Web APIs not found");
     }
 
     const a = document.createElement('a');
     const uriRes = await blobToUri(blob);
-    if (uriRes.type === ResultType.Err) {
+    if (uriRes.type === 'err') {
         return uriRes;
     }
 
@@ -42,5 +42,5 @@ export async function tryDownloadFile(name: string, blob: Blob): Promise<Result<
     a.href = uri;
     a.download = name;
     a.click();
-    return { type: ResultType.Ok, ok: null };
+    return ok(null);
 }

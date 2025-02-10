@@ -1,4 +1,4 @@
-import { Result, ResultType } from '../core/result.js';
+import { ok, Result } from '../core/result.js';
 import tu from '../tu.js';
 
 export type Status = {
@@ -19,14 +19,14 @@ export async function fetch<B>(
     init?: RequestInit,
 ): Promise<Res<B>> {
     const responseRes = await tu.std.global.fetch(input, init);
-    if (responseRes.type === ResultType.Err) {
+    if (responseRes.type === 'err') {
         return responseRes;
     }
 
     const response = responseRes.ok;
     const status = { code: response.status, text: response.statusText };
     const body = await middleware(response);
-    return { type: ResultType.Ok, ok: { status, body } };
+    return ok({ status, body });
 }
 
 export async function postJson<B>(

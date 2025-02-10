@@ -1,4 +1,4 @@
-import { unsafe } from '../core.js';
+import { result, unsafe } from '../core.js';
 import { Result } from '../core/result.js';
 import { blob } from '../std.js';
 
@@ -12,5 +12,5 @@ export async function arrayBuffer(self: Blob): Promise<Result<ArrayBuffer, unkno
 
 export async function bytes(self: Blob): Promise<Result<Uint8Array, unknown>> {
     const arrayBufferRes = await blob.arrayBuffer(self);
-    return Result.map(arrayBufferRes, ab => new Uint8Array(ab));
+    return result.map(arrayBufferRes, ab => new Uint8Array(ab));
 }
