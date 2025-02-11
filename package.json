@@ -1,6 +1,6 @@
 {
   "name": "tuintu",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "An opinionated and safe std lib for JS/TS",
   "repository": "https://github.com/TetroGem/tuintu",
   "main": "index.js",

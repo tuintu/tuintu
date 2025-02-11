@@ -1,8 +1,8 @@
 import { result } from '../src/core.js';
-import { err, ok } from '../src/core/result.js';
+import { err, ok, Result } from '../src/core/result.js';
 
 const res = err("Hello!");
 
-const msg = result.expect(res, "Expected Ok value");
+const msg = result.unwrapOrElse(res, () => 128);
 
 console.log(msg);

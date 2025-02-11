@@ -66,3 +66,17 @@ export function expect<T, E>(self: Result<T, E>, message: string): T {
         }
     }
 }
+
+export function unwrapOr<T, E, F>(self: Result<T, E>, fallback: F): T | F {
+    switch (self.type) {
+        case 'ok': return self.ok;
+        case 'err': return fallback;
+    }
+}
+
+export function unwrapOrElse<T, E, F>(self: Result<T, E>, fallback: () => F): T | F {
+    switch (self.type) {
+        case 'ok': return self.ok;
+        case 'err': return fallback();
+    }
+}
