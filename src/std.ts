@@ -5,5 +5,6 @@ import * as global from "./std/global.js";
 import * as json from "./std/json.js";
 import * as zod from "./std/zod.js";
 import * as collect from "./std/collect.js";
+import * as anyhow from "./std/anyhow.js";
 
-export { blob, body, fetch, global, json, zod, collect };
+export { blob, body, fetch, global, json, zod, collect, anyhow };
