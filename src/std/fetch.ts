@@ -1,15 +1,9 @@
-import { ok, Result } from '../core/result.js';
-import tu from '../tu.js';
+import { ok, Result } from "../core/result.js";
+import { std } from "../tu.js";
 
-export type Status = {
-    code: number,
-    text: string,
-};
+export type Status = { code: number; text: string };
 
-export type Response<B> = {
-    status: Status,
-    body: B,
-};
+export type Response<B> = { status: Status; body: B };
 
 export type Res<B> = Result<Response<B>, unknown>;
 
@@ -18,8 +12,8 @@ export async function fetch<B>(
     middleware: (body: Body) => Promise<B>,
     init?: RequestInit,
 ): Promise<Res<B>> {
-    const responseRes = await tu.std.global.fetch(input, init);
-    if (responseRes.type === 'err') {
+    const responseRes = await std.global.fetch(input, init);
+    if (responseRes.type === "err") {
         return responseRes;
     }
 
@@ -35,11 +29,9 @@ export async function postJson<B>(
     middleware: (body: Body) => Promise<B>,
 ): Promise<Res<B>> {
     return fetch(input, middleware, {
-        method: 'POST',
+        method: "POST",
         body: json,
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { "Content-Type": "application/json" },
     });
 }
 

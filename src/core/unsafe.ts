@@ -1,4 +1,4 @@
-import { err, ok, Result } from './result.js';
+import { err, ok, Result } from "./result.js";
 
 export function sync<R>(runner: () => R): Result<R, unknown> {
     try {
@@ -8,15 +8,9 @@ export function sync<R>(runner: () => R): Result<R, unknown> {
     }
 }
 
-export async function promise<R>(promise: Promise<R>): Promise<Result<Awaited<R>, unknown>> {
-    try {
-        return ok(await promise);
-    } catch (e) {
-        return err(e);
-    }
-}
-
-export async function async<R>(runner: () => Promise<R>): Promise<Result<Awaited<R>, unknown>> {
+export async function async<R>(
+    runner: () => Promise<R>,
+): Promise<Result<Awaited<R>, unknown>> {
     try {
         return ok(await runner());
     } catch (e) {

@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { err, ok, Result } from '../core/result.js';
+import { z } from "zod";
+import { err, ok, Result } from "../core/result.js";
 
 export function parse<const S extends z.Schema>(
     schema: S,
@@ -7,7 +7,9 @@ export function parse<const S extends z.Schema>(
 ): Result<z.output<S>, z.ZodError> {
     const res = schema.safeParse(data);
     switch (res.success) {
-        case true: return ok(res.data);
-        case false: return err(res.error);
+        case true:
+            return ok(res.data);
+        case false:
+            return err(res.error);
     }
 }

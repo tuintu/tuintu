@@ -1,8 +1,8 @@
-import * as panic from './core/panic.js';
-export * as panic from './core/panic.js';
-import * as result from './core/result.js';
-export * as result from './core/result.js';
-import * as unsafe from './core/unsafe.js';
-export * as unsafe from './core/unsafe.js';
+import * as panic from "./core/panic.js";
+import * as result from "./core/result.js";
+import * as unsafe from "./core/unsafe.js";
+import * as variant from "./core/variant.js";
+import * as controlFlow from "./core/control-flow.js";
+import * as option from "./core/option.js";
 
-export default { panic, result, unsafe };
+export { panic, result, unsafe, variant, controlFlow, option };
