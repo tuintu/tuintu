@@ -1,6 +1,7 @@
 {
     "name": "@tuintu/mongodb",
     "version": "0.0.12",
+    "private": false,
     "description": "An opinionated runtime-safety driven std lib for JS/TS",
     "repository": "https://github.com/TetroGem/tuintu",
     "type": "module",
