@@ -1,5 +1,5 @@
 import { ok, Result } from "../core/result.js";
-import { std } from "../tu.js";
+import { std } from "../index.js";
 
 export type Status = { code: number; text: string };
 

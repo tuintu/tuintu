@@ -1,5 +1,3 @@
-export const UNIT = Symbol();
-
 export type Variant<
     Variants extends [PropertyKey, any] | [PropertyKey],
     Key extends PropertyKey = "type",

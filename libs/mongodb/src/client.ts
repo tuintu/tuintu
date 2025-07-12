@@ -1,6 +1,6 @@
 import { MongoClientOptions, MongoClient as UnsafeClient } from "mongodb";
-import { err, ok, Result } from "../../core/result.js";
-import { unsafe } from "../../core.js";
+import { err, ok, Result } from "tuintu/core/result";
+import { unsafe } from "tuintu/core";
 import { MongoDb } from "./db.js";
 import { MongoConfig, MongoSshConfig } from "./config.js";
 import fs from "fs/promises";

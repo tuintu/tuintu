@@ -10,9 +10,9 @@ import {
     BulkWriteOptions,
     DeleteOptions,
 } from "mongodb";
-import { unsafe } from "../../core.js";
-import { err, ok, Result } from "../../core/result.js";
-import { std } from "../../tu.js";
+import { unsafe } from "tuintu/core";
+import { err, ok, Result } from "tuintu/core/result";
+import { std } from "tuintu";
 import { z } from "zod";
 import { MongoError } from "./error.js";
 

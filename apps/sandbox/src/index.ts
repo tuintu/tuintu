@@ -1,9 +1,9 @@
-import { result } from "../src/core.js";
-import { none, Option, some } from "../src/core/option.js";
-import { err, ok, Result } from "../src/core/result.js";
-import { collect, collectors } from "../src/std/collect.js";
+import { result } from "tuintu/core";
+import { none, some, Option } from "tuintu/core/option";
+import { err, ok, Result } from "tuintu/core/result";
+import { collect, collectors } from "tuintu/std/collect";
 
-const res = ok("Hello!");
+const res = err("Hello!");
 
 const msg = result.unwrapOrElse(res, () => 128);
 const msg2 = result.unwrapOr(res, 128);

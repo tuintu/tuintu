@@ -1,8 +1,8 @@
 import { Document, Db as UnsafeDb } from "mongodb";
-import { unsafe } from "../../core.js";
+import { unsafe } from "tuintu/core";
 import { z } from "zod";
 import { MongoCollection } from "./collection.js";
-import { ok, Result } from "../../core/result.js";
+import { ok, Result } from "tuintu/core/result";
 
 export class MongoDb {
     private db: UnsafeDb;

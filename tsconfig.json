@@ -8,13 +8,11 @@
         "declaration": true,
         "outDir": "dist",
         "skipLibCheck": true,
+        "esModuleInterop": true,
+        "noUncheckedIndexedAccess": true,
         "lib": [
             "ESNext",
             "DOM"
         ]
     },
-    "include": [
-        "src",
-        "sandbox"
-    ],
 }
