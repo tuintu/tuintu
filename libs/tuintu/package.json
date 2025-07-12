@@ -1,45 +1,36 @@
 {
-  "name": "tuintu",
-  "version": "0.0.12",
-  "description": "An opinionated runtime-safety driven std lib for JS/TS",
-  "repository": "https://github.com/TetroGem/tuintu",
-  "type": "module",
-  "zshy": {
-    "exports": {
-      ".": "./src/index.ts",
-      "./*": "./src/*"
-    }
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "zshy && pnpm exec tsx ../../apps/fix-package-json/src/index ./package.json"
-  },
-  "author": "tetrogem",
-  "license": "ISC",
-  "dependencies": {
-    "zod": "^3.25.67"
-  },
-  "devDependencies": {
-    "@types/node": "^24.0.10",
-    "typescript": "^5.8.3"
-  },
-  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.cts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.cts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "name": "tuintu",
+    "version": "0.0.12",
+    "description": "An opinionated runtime-safety driven std lib for JS/TS",
+    "repository": "https://github.com/TetroGem/tuintu",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rm -rf dist && pnpm exec tsc"
     },
-    "./*": {
-      "types": "./dist/*",
-      "import": "./dist/*",
-      "require": "./dist/*"
+    "author": "tetrogem",
+    "license": "ISC",
+    "dependencies": {
+        "zod": "^3.25.67"
+    },
+    "devDependencies": {
+        "@types/node": "^24.0.10",
+        "typescript": "^5.8.3"
+    },
+    "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
+    "files": [
+        "dist"
+    ],
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js"
+        }
     }
-  }
 }

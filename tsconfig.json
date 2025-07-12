@@ -4,7 +4,7 @@
         "moduleResolution": "nodenext",
         "target": "ES2022",
         "strict": true,
-        "sourceMap": true,
+        "sourceMap": false,
         "declaration": true,
         "outDir": "dist",
         "skipLibCheck": true,

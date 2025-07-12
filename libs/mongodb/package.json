@@ -4,15 +4,9 @@
     "description": "An opinionated runtime-safety driven std lib for JS/TS",
     "repository": "https://github.com/TetroGem/tuintu",
     "type": "module",
-    "zshy": {
-        "exports": {
-            ".": "./src/index.ts",
-            "./*": "./src/*"
-        }
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "pnpm exec tsc && pnpm exec tsx ../../apps/fix-package-json/src/index ./package.json"
+        "build": "rm -rf dist && pnpm exec tsc"
     },
     "author": "tetrogem",
     "license": "ISC",
@@ -30,19 +24,16 @@
     "files": [
         "dist"
     ],
-    "main": "./dist/index.cjs",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
+            "import": "./dist/index.js"
         },
         "./*": {
             "types": "./dist/*.d.ts",
-            "import": "./dist/*.js",
-            "require": "./dist/*.cjs"
+            "import": "./dist/*.js"
         }
     }
 }
