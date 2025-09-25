@@ -13,16 +13,16 @@ import {
 import { unsafe } from "tuintu/core";
 import { err, ok, Result } from "tuintu/core/result";
 import { std } from "tuintu";
-import { z } from "zod";
 import { MongoError } from "./error.js";
+import { StandardSchemaV1 } from "@standard-schema/spec";
 
 export class MongoCollection<T extends Document> {
     private collection: UnsafeCollection;
-    private zod: z.Schema<T>;
+    private schema: StandardSchemaV1<unknown, T>;
 
     private constructor(ctx: NewCtx<T>) {
         this.collection = ctx.collection;
-        this.zod = ctx.zod;
+        this.schema = ctx.schema;
     }
 
     public static new<T extends Document>(ctx: NewCtx<T>): MongoCollection<T> {
@@ -60,18 +60,18 @@ export class MongoCollection<T extends Document> {
             );
         }
 
-        const zodRes = std.zod.parse(this.zod, doc);
-        if (zodRes.type === "err") {
+        const parseRes = await std.schema.parseAsync(this.schema, doc);
+        if (parseRes.type === "err") {
             return err(
                 MongoError.new({
                     type: "unexpected",
-                    cause: zodRes.type,
+                    cause: parseRes.type,
                     message: "The requested document was malformed",
                 }),
             );
         }
 
-        const value = zodRes.ok;
+        const value = parseRes.ok;
         return ok(value);
     }
 
@@ -137,13 +137,13 @@ export class MongoCollection<T extends Document> {
         cursor: MongoCursor,
     ): AsyncGenerator<Result<T, MongoError<Unexpected>>> {
         for await (const doc of cursor) {
-            const zodRes = std.zod.parse(this.zod, doc);
-            switch (zodRes.type) {
+            const parseRes = await std.schema.parseAsync(this.schema, doc);
+            switch (parseRes.type) {
                 case "err": {
                     yield err(
                         MongoError.new({
                             type: "unexpected",
-                            cause: zodRes.err,
+                            cause: parseRes.err,
                             message: "The requested document was malformed",
                         }),
                     );
@@ -151,7 +151,7 @@ export class MongoCollection<T extends Document> {
                     break;
                 }
                 case "ok": {
-                    yield ok(zodRes.ok);
+                    yield ok(parseRes.ok);
                     break;
                 }
             }
@@ -285,7 +285,7 @@ export class MongoCollection<T extends Document> {
 
 export type NewCtx<T> = {
     collection: UnsafeCollection;
-    zod: z.Schema<T>;
+    schema: StandardSchemaV1<unknown, T>;
 };
 
 export type Filter<T> = MongoFilter<T>;

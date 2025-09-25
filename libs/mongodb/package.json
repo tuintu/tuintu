@@ -1,6 +1,6 @@
 {
     "name": "@tuintu/mongodb",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "private": false,
     "description": "An opinionated runtime-safety driven std lib for JS/TS",
     "repository": "https://github.com/TetroGem/tuintu",
@@ -12,6 +12,7 @@
     "author": "tetrogem",
     "license": "ISC",
     "dependencies": {
+        "@standard-schema/spec": "^1.0.0",
         "mongodb": "^6.17.0",
         "tuintu": "workspace:*",
         "tunnel-ssh": "^5.2.0",

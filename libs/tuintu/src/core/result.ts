@@ -99,12 +99,24 @@ export function unwrapOrElse<T, E, F>(
 }
 
 export function flatten<T, E, F>(
-    result: Result<Result<T, E>, F>,
+    self: Result<Result<T, E>, F>,
 ): Result<T, E | F> {
-    switch (result.type) {
+    switch (self.type) {
         case "ok":
-            return result.ok;
+            return self.ok;
         case "err":
-            return result;
+            return self;
+    }
+}
+
+export function andThen<T, U, E, F>(
+    self: Result<T, E>,
+    then: (ok: T) => Result<U, F>,
+): Result<U, E | F> {
+    switch (self.type) {
+        case "ok":
+            return then(self.ok);
+        case "err":
+            return self;
     }
 }

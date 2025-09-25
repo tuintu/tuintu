@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { err, ok, Result } from "../core/result.js";
 
+/**
+ * @deprecated Use the `schema` module from std instead
+ */
 export function parse<const S extends z.Schema>(
     schema: S,
     data: unknown,

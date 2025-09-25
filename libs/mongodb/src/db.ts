@@ -1,8 +1,8 @@
 import { Document, Db as UnsafeDb } from "mongodb";
 import { unsafe } from "tuintu/core";
-import { z } from "zod";
 import { MongoCollection } from "./collection.js";
 import { ok, Result } from "tuintu/core/result";
+import { StandardSchemaV1 } from "@standard-schema/spec";
 
 export class MongoDb {
     private db: UnsafeDb;
@@ -18,7 +18,7 @@ export class MongoDb {
     public collection<T extends Document>(
         ctx: CollectionCtx<T>,
     ): Result<MongoCollection<T>, unknown> {
-        const { name, zod } = ctx;
+        const { name, schema } = ctx;
 
         const collectionRes = unsafe.sync(() => this.db.collection(name));
         if (collectionRes.type === "err") {
@@ -27,7 +27,7 @@ export class MongoDb {
 
         const collection = MongoCollection.new({
             collection: collectionRes.ok,
-            zod,
+            schema,
         });
         return ok(collection);
     }
@@ -35,5 +35,5 @@ export class MongoDb {
 
 export type CollectionCtx<T extends Document> = {
     name: string;
-    zod: z.Schema<T>;
+    schema: StandardSchemaV1<unknown, T>;
 };

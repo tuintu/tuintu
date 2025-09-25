@@ -1,8 +1,13 @@
 import { unsafe } from "../core.js";
 import { Result } from "../core/result.js";
 
+export type TextResult = Result<string, unknown>;
 export type JsonResult = Result<unknown, unknown>;
 export type BlobResult = Result<Blob, unknown>;
+
+export function text(body: Body): Promise<TextResult> {
+    return unsafe.async(() => body.text());
+}
 
 export function json(body: Body): Promise<JsonResult> {
     return unsafe.async(() => body.json());
